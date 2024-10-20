@@ -4,23 +4,32 @@ const path = require("node:path");
 const folder = process.argv[2] ?? ".";
 
 async function ls(folder) {
+  let files  
+  try {
+    files = await fs.readdir(folder)
+  } catch (error) {
+    console.error(`No se puede leer el directorio: ${folder}`)
+    process.exit(1)
+  }
+  const filesPromises = files.map(async file => { 
+    const filePath = path.join(folder, file)
+    let stats
+    try {
+      stats = await fs.stat(filePath) // status - informacion del archivo
+    } catch (error) {
+      console.error(`No se puede leer el archivo: ${filePath}`)
+      process.exit(1)
+    }
+    const isDirectory = stats.isDirectory()
+    const fileType = isDirectory ? "d" : "f"
+    const fileSize = stats.size
+    const fileModified = stats.mtime.toLocaleString()
+  
+    return `${fileType} ${file.padEnd(20)} ${fileSize.toString().padStart(10)} ${fileModified}`;
+  })  
+  const filesInfo = await Promise.all(filesPromises)
 
+  filesInfo.forEach(file => console.log(file))
 }
 
 ls(folder)
-
-// para leer todos los archivos o ficheros en la carpeta
-fs.readdir(folder).then((files) => {
-    files.forEach((file) => {
-      const filePath = path.join(folder, file);
-        console.log(filePath);
-        fs.stat(filePath).then((stats) => {
-            console.log(stats);
-        })
-    });
-}).catch((err) => {
-      if (err) {
-        console.log("error reading file", err);
-        return;
-      }
-})
