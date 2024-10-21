@@ -1,0 +1,30 @@
+{
+  "name": "course-node",
+  "version": "1.0.0",
+  "description": "aprendiendo node",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/conradojuliosisnero/node-course.git"
+  },
+  "keywords": [
+    "node",
+    "curso",
+    "aprendiendo"
+  ],
+  "author": "julio conrado",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/conradojuliosisnero/node-course/issues"
+  },
+  "homepage": "https://github.com/conradojuliosisnero/node-course#readme",
+  "dependencies": {
+    "picocolors": "^1.1.1"
+  },
+  "devDependencies": {
+    "standard": "^17.1.2"
+  }
+}
